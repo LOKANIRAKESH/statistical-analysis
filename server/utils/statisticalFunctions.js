@@ -96,13 +96,18 @@ class StatisticalFunctions {
   }
 
   // Linear Regression
- // ... inside the StatisticalFunctions class
+  // ... inside the StatisticalFunctions class
 
 // Linear Regression
 static linearRegression(x, y) {
+  // --- ADD VALIDATION ---
+  if (!Array.isArray(x) || !Array.isArray(y)) {
+    throw new Error('Linear Regression requires two arrays of numbers for X and Y values.');
+  }
   if (x.length !== y.length || x.length === 0) {
     throw new Error('Input arrays must have the same non-zero length.');
   }
+  // --- END VALIDATION ---
 
   const n = x.length;
   const sumX = x.reduce((sum, val) => sum + val, 0);
