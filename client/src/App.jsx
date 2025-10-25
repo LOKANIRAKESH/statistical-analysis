@@ -121,7 +121,7 @@ function App() {
         </main>
       </div>
 
-      <StatisticsTable history={history} />
+      <StatisticsTable history={history} fetchHistory={fetchHistory} />
     </div>
   );
 }

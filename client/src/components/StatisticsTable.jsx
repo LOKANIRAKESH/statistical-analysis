@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StatisticsTable = ({ history }) => {
+const StatisticsTable = ({ history, fetchHistory }) => { // Add fetchHistory to props
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString();
   };
@@ -19,7 +19,14 @@ const StatisticsTable = ({ history }) => {
 
   return (
     <div className="history-section">
-      <h2>Calculation History</h2>
+      {/* Add a header with the refresh button */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h2 style={{ margin: 0 }}>Calculation History</h2>
+        <button onClick={fetchHistory} className="calculate-button" style={{ padding: '10px 15px', fontSize: '0.9rem' }}>
+          Refresh History
+        </button>
+      </div>
+
       {history.length === 0 ? (
         <p style={{ textAlign: 'center', color: '#666', padding: '20px' }}>
           No calculations yet. Start by selecting an analysis type.

@@ -96,16 +96,42 @@ class StatisticalFunctions {
   }
 
   // Linear Regression
-  static linearRegression(x, y) {
-    const regression = jStat.linearRegression(x, y);
-    const r2 = jStat.corrcoeff(x, y) ** 2;
-    return {
-      slope: regression.slope,
-      intercept: regression.intercept,
-      r2,
-      equation: `y = ${regression.slope.toFixed(4)}x + ${regression.intercept.toFixed(4)}`
-    };
+ // ... inside the StatisticalFunctions class
+
+// Linear Regression
+static linearRegression(x, y) {
+  if (x.length !== y.length || x.length === 0) {
+    throw new Error('Input arrays must have the same non-zero length.');
   }
+
+  const n = x.length;
+  const sumX = x.reduce((sum, val) => sum + val, 0);
+  const sumY = y.reduce((sum, val) => sum + val, 0);
+  const sumXY = x.reduce((sum, val, i) => sum + (val * y[i]), 0);
+  const sumXX = x.reduce((sum, val) => sum + (val * val), 0);
+
+  // Calculate slope (m) and intercept (b)
+  const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  // Calculate R-squared value
+  const meanY = sumY / n;
+  const totalSumSquares = y.reduce((sum, val) => sum + Math.pow(val - meanY, 2), 0);
+  const residualSumSquares = y.reduce((sum, val, i) => {
+    const predictedY = slope * x[i] + intercept;
+    return sum + Math.pow(val - predictedY, 2);
+  }, 0);
+  const r2 = 1 - (residualSumSquares / totalSumSquares);
+
+  return {
+    slope: slope,
+    intercept: intercept,
+    r2: r2,
+    equation: `y = ${slope.toFixed(4)}x + ${intercept.toFixed(4)}`
+  };
+}
+
+// ... rest of the class
 }
 
 module.exports = StatisticalFunctions;  
