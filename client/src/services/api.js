@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api/statistics';
+const API_BASE_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api/statistics` 
+  : '/api/statistics';
 
 export const statisticalAPI = {
   // Normal Distribution
@@ -23,4 +25,4 @@ export const statisticalAPI = {
   
   // Get History
   getHistory: () => axios.get(`${API_BASE_URL}/history`)
-};      
+};
